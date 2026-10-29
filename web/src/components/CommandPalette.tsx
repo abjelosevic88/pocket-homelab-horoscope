@@ -43,7 +43,7 @@ export function CommandPalette({ onClose, commands }: { onClose: () => void; com
       <div className="palette-box" role="dialog" aria-label="Search and commands">
         <div className="pal-input">
           <Icon name="search" size={18} />
-          <input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder="Find a song, or run a command…" aria-label="Search"
+          <input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder="Find a person, or run a command…" aria-label="Search"
             onKeyDown={e => {
               if (e.key === 'ArrowDown') { e.preventDefault(); setHi(h => Math.min(rows.length - 1, h + 1)) }
               else if (e.key === 'ArrowUp') { e.preventDefault(); setHi(h => Math.max(0, h - 1)) }

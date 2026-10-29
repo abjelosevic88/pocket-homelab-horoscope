@@ -33,7 +33,7 @@ export default function Login({ mode }: { mode: 'login' | 'setup' }) {
         <div className="login-brand">
           <img src="/favicon.svg" alt="" width={44} height={44} />
           <h1>{title}</h1>
-          <p className="login-tagline">{mode === 'setup' ? 'Welcome! Create the first account to get started.' : 'Your tabs and your practice, at home.'}</p>
+          <p className="login-tagline">{mode === 'setup' ? 'Welcome! Create the first account to get started.' : 'Your birth chart, your day and the Moon, at home.'}</p>
         </div>
         {sso && <>
           <a className="btn primary lg block" href={`${V1}/auth/oidc/start?next=${encodeURIComponent(from)}`}>
@@ -50,7 +50,7 @@ export default function Login({ mode }: { mode: 'login' | 'setup' }) {
           {err && <div className="callout danger"><Icon name="alert" size={15} /><span>{err}</span></div>}
           <button className={`btn lg block ${sso ? '' : 'primary'}`} disabled={busy}>{busy ? 'Please wait…' : mode === 'setup' ? 'Create account' : 'Sign in'}</button>
         </form>
-        {mode === 'setup' && <p className="login-note">You become the admin. Add the household under Settings → People; everyone gets their own practice, journal and progress on the Path.</p>}
+        {mode === 'setup' && <p className="login-note">You become the admin. Add the household under Settings → People; everyone gets their own people, charts, journal and readings.</p>}
       </div>
       {status?.version && <p className="login-version">Pocket Horoscope v{status.version.replace(/^v/, '')}</p>}
     </div>

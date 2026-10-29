@@ -182,7 +182,7 @@ export function Heatmap({ days, weekStart = 1, goal = 0, fmt = (m: number) => `$
         {cells.map((c, i) => c && <rect key={c.date} x={Math.floor(i / 7) * (S + G)} y={16 + (i % 7) * (S + G)} width={S} height={S} rx={3} className={`hm hm-${level(c.minutes)}`}
           onMouseEnter={() => setTip({ d: c.date, m: c.minutes, x: Math.floor(i / 7) * (S + G), y: (i % 7) * (S + G) })} />)}
       </svg>
-      {tip && <div className="chart-tip" style={{ left: tip.x + 6, top: tip.y + 36 }}><b>{tip.m ? fmt(tip.m) : 'no practice'}</b><span>{fmtDate(tip.d)}</span></div>}
+      {tip && <div className="chart-tip" style={{ left: tip.x + 6, top: tip.y + 36 }}><b>{tip.m ? fmt(tip.m) : 'none'}</b><span>{fmtDate(tip.d)}</span></div>}
       <div className="hm-legend small muted">Less {[0, 1, 2, 3, 4].map(l => <i key={l} className={`hm-${l}`} />)} More</div>
     </div>
   )
