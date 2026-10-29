@@ -327,3 +327,9 @@ span.block { display: block; }
 .sb-big3-item { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; border-radius: 8px; background: var(--surface-2); }
 .sb-big3-glyph { font-size: 18px; color: var(--accent); font-family: "Segoe UI Symbol", "Noto Sans Symbols", "Apple Symbols", "DejaVu Sans", sans-serif; }
 .set-section-head .set-app-ico { background: var(--accent-soft); color: var(--accent-ink); }
+
+/* card, row and button links: no hover underline (plain text links keep theirs) */
+a[class]:hover { text-decoration: none; }
+
+/* card, row and button links: no hover underline (plain text links keep theirs) */
+a[class]:hover { text-decoration: none; }
