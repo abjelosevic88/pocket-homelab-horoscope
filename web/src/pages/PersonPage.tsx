@@ -11,6 +11,7 @@ import { Icon } from '../components/icons'
 import { announceChange, useCrumb } from '../components/Layout'
 import { Markdown } from '../components/Markdown'
 import { PersonModal } from '../components/PersonForm'
+import { PlanetsView } from '../components/PlanetsView'
 import { Card, Confirm, Empty, Loading, Spinner, Tabs, errMsg, useIsMobile, useToast } from '../components/ui'
 
 type Tab = 'overview' | 'planets' | 'houses' | 'aspects' | 'readings'
@@ -109,11 +110,7 @@ export default function PersonPage() {
       )}
 
       {tab === 'planets' && (
-        <Card flush>
-          <div className="pc-list">
-            {[...view.placements, ...view.points.filter(x => c.time_known || x.body === 'southnode')].map(pl => <PlacementRow key={pl.body} pl={pl} open={open === pl.body} onToggle={() => setOpen(open === pl.body ? '' : pl.body)} />)}
-          </div>
-        </Card>
+        <PlanetsView placements={view.placements} points={view.points.filter(x => c.time_known || x.body === 'southnode')} open={open} onOpen={setOpen} />
       )}
 
       {tab === 'houses' && (c.houses ? (
@@ -139,27 +136,6 @@ export default function PersonPage() {
 
       {edit && <PersonModal person={p} onClose={() => setEdit(false)} onSaved={() => { setEdit(false); announceChange(); load() }} />}
       {del && <Confirm title={`Delete ${p.name}?`} message="Their chart and the readings about them are removed. This cannot be undone." confirmLabel="Delete" onConfirm={remove} onCancel={() => setDel(false)} />}
-    </div>
-  )
-}
-
-function PlacementRow({ pl, open, onToggle }: { pl: Placement; open: boolean; onToggle: () => void }) {
-  return (
-    <div id={`pl-${pl.body}`} className={`pc-pl ${open ? 'open' : ''}`}>
-      <button type="button" className="pc-pl-head" onClick={onToggle} aria-expanded={open}>
-        <span className="glyph pc-pl-glyph">{BODY_GLYPH[pl.body] || pl.glyph}</span>
-        <span className="pc-pl-name"><b>{pl.name}</b><span className="muted xs ellipsis">{pl.short}</span></span>
-        <span className="pc-pl-where">{pl.where}{pl.retro && <span className="pc-retro" title="Retrograde"> ℞</span>}</span>
-        <span className="pc-pl-house muted small">{pl.house ? `${ORD[pl.house]} house` : ''}</span>
-        <Icon name={open ? 'chevron-up' : 'chevron-down'} size={15} className="muted" />
-      </button>
-      {open && (
-        <div className="pc-pl-body">
-          {pl.sign_text && <p><b>In {signName(pl.sign)}.</b> {pl.sign_text}</p>}
-          {pl.house_text && <p><b>In the {ORD[pl.house]} house.</b> {pl.house_text}</p>}
-          {pl.retro && <p className="muted small">Retrograde at birth: this side of you tends to work inwardly first, and shows later.</p>}
-        </div>
-      )}
     </div>
   )
 }
