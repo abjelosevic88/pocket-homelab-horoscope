@@ -12,6 +12,8 @@ import { announceChange, useCrumb } from '../components/Layout'
 import { Markdown } from '../components/Markdown'
 import { PersonModal } from '../components/PersonForm'
 import { PlanetsView } from '../components/PlanetsView'
+import { HousesView } from '../components/HousesView'
+import { AspectsView } from '../components/AspectsView'
 import { Card, Confirm, Empty, Loading, Spinner, Tabs, errMsg, useIsMobile, useToast } from '../components/ui'
 
 type Tab = 'overview' | 'planets' | 'houses' | 'aspects' | 'readings'
@@ -114,91 +116,15 @@ export default function PersonPage() {
       )}
 
       {tab === 'houses' && (c.houses ? (
-        <Card flush sub={`${c.houses.system[0].toUpperCase() + c.houses.system.slice(1)} houses${c.houses.fallback ? ` — ${c.houses.fallback}` : ''}`} title="The twelve houses">
-          <div className="pc-list">
-            {view.houses.map(h => (
-              <div key={h.n} className="pc-house">
-                <span className="pc-house-n">{h.n}</span>
-                <div className="grow">
-                  <div><b>{h.name}</b> <span className="muted small">· starts in <span className="glyph">{SIGN_GLYPH[h.sign]}</span> {signName(h.sign)}</span></div>
-                  <p className="muted small pc-house-sum">{h.summary}</p>
-                </div>
-                <span className="pc-house-bodies glyph" title={h.bodies.map(b => b).join(', ')}>{h.bodies.map(b => BODY_GLYPH[b]).join(' ')}</span>
-              </div>
-            ))}
-          </div>
-        </Card>
+        <HousesView houses={view.houses} placements={view.placements} asc={c.houses.asc} system={`${c.houses.system[0].toUpperCase() + c.houses.system.slice(1)} houses${c.houses.fallback ? ` (${c.houses.fallback})` : ''}`} />
       ) : <Empty title="No houses without a birth time" icon="clock">The houses depend on the exact time and place of birth. <button type="button" className="link-btn" onClick={() => setEdit(true)}>Add them</button>.</Empty>)}
 
-      {tab === 'aspects' && <Aspects aspects={view.aspects} placements={view.placements} />}
+      {tab === 'aspects' && <AspectsView aspects={view.aspects} placements={view.placements} />}
 
       {tab === 'readings' && <PersonReadings id={p.id} onWrite={() => write('natal')} writing={writing === 'natal'} />}
 
       {edit && <PersonModal person={p} onClose={() => setEdit(false)} onSaved={() => { setEdit(false); announceChange(); load() }} />}
       {del && <Confirm title={`Delete ${p.name}?`} message="Their chart and the readings about them are removed. This cannot be undone." confirmLabel="Delete" onConfirm={remove} onCancel={() => setDel(false)} />}
-    </div>
-  )
-}
-
-function Aspects({ aspects, placements }: { aspects: AspectView[]; placements: Placement[] }) {
-  const mobile = useIsMobile()
-  const [open, setOpen] = useState('')
-  const [filter, setFilter] = useState('')
-  const listRef = useRef<HTMLDivElement>(null)
-  if (!aspects.length) return <Empty title="No aspects" icon="activity">No planets are at a meaningful angle to each other within the orbs you chose.</Empty>
-  const keyOf = (a: AspectView) => `${a.a}-${a.b}-${a.type}`
-  const bodies = placements.map(p => p.body)
-  const find = (x: string, y: string) => aspects.find(a => (a.a === x && a.b === y) || (a.a === y && a.b === x))
-  const shown = filter ? aspects.filter(a => a.a === filter || a.b === filter) : aspects
-  const openAspect = (a: AspectView) => { setOpen(keyOf(a)); setTimeout(() => document.getElementById(`as-${keyOf(a)}`)?.scrollIntoView({ block: 'center', behavior: 'smooth' }), 0) }
-  return (
-    <div className="pc-aspects">
-      {!mobile && (
-        <Card title="Aspect grid" sub="Tap a square to read about it.">
-          <table className="as-grid" aria-label="Aspect grid">
-            <tbody>
-              {bodies.map((row, i) => (
-                <tr key={row}>
-                  <th scope="row" className="glyph" title={row}>{BODY_GLYPH[row]}</th>
-                  {bodies.slice(0, i).map(col => {
-                    const a = find(row, col)
-                    return (
-                      <td key={col}>
-                        {a && <button type="button" className="as-cell glyph" style={{ color: ASPECT_COLOR[a.type] }} title={`${a.title}, ${a.orb.toFixed(1)}°`} onClick={() => openAspect(a)}>{ASPECT_GLYPH[a.type]}</button>}
-                      </td>
-                    )
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Card>
-      )}
-      <Card flush title={`${shown.length} aspects`} actions={filter ? <button type="button" className="btn sm" onClick={() => setFilter('')}>Show all</button> : undefined}>
-        <div className="pc-list" ref={listRef}>
-          {shown.map(a => {
-            const k = keyOf(a)
-            const isOpen = open === k
-            return (
-              <div key={k} id={`as-${k}`} className={`pc-pl ${isOpen ? 'open' : ''}`}>
-                <button type="button" className="pc-pl-head" onClick={() => setOpen(isOpen ? '' : k)} aria-expanded={isOpen}>
-                  <span className="glyph pc-as-glyph" style={{ color: ASPECT_COLOR[a.type] }}>{ASPECT_GLYPH[a.type]}</span>
-                  <span className="pc-pl-name"><b>{a.title}</b><span className="muted xs">{ASPECT_NAME[a.type]} · {a.nature === 'easy' ? 'flowing' : a.nature === 'hard' ? 'tense' : 'blending'}</span></span>
-                  <span className="pc-pl-where tnum small">{a.orb.toFixed(1)}°</span>
-                  <span className="pc-pl-house muted small">{a.applying ? 'growing' : 'fading'}</span>
-                  <Icon name={isOpen ? 'chevron-up' : 'chevron-down'} size={15} className="muted" />
-                </button>
-                {isOpen && (
-                  <div className="pc-pl-body">
-                    <p>{a.text}</p>
-                    <p className="muted small">{a.orb.toFixed(1)}° from exact. The closer, the stronger. <button type="button" className="link-btn" onClick={() => setFilter(a.a)}>All aspects of {a.a_name}</button></p>
-                  </div>
-                )}
-              </div>
-            )
-          })}
-        </div>
-      </Card>
     </div>
   )
 }
