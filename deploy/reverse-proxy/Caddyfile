@@ -1,0 +1,5 @@
+# Pocket Horoscope behind Caddy. Homepage widgets and linked apps send their own
+# bearer token to /api/*.
+horoscope.example.com {
+	reverse_proxy pocket-horoscope:8080
+}

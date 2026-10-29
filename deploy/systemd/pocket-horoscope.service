@@ -1,0 +1,23 @@
+[Unit]
+Description=Pocket Horoscope — your birth chart, your day and the Moon
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=pocket-horoscope
+Group=pocket-horoscope
+ExecStart=/usr/local/bin/pocket-horoscope
+Environment=DATA_DIR=/var/lib/pocket-horoscope
+Environment=PORT=8080
+Environment=BASE_URL=https://horoscope.example.com
+Environment=SECURE_COOKIES=true
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/pocket-horoscope
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

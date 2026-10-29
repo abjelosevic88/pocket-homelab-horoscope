@@ -1,0 +1,145 @@
+/* ---- Sky & Moon ---- */
+.page { min-width: 0; }
+.sky-page, .readings-page { min-width: 0; }
+.sky-wheel-card, .sky-moon-card, .moon-detail, .retro-card, .retro-item, .sky-month { min-width: 0; }
+.sky-tabs { margin: -6px 0 18px; border-bottom: 1px solid var(--border); }
+.sky-text { margin: 0; line-height: 1.55; font-size: 14px; }
+.sky-text + .sky-text { margin-top: 8px; }
+
+.sky-now { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.sky-wheel { display: flex; justify-content: center; }
+.sky-wheel > svg, .sky-wheel > div { max-width: 100%; height: auto; }
+.sky-moon-top { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.sky-moon-title { font-weight: 650; font-size: 16px; }
+.sky-void { display: flex; gap: 8px; align-items: flex-start; margin-top: 12px; padding: 9px 11px; border-radius: 10px; background: var(--surface-2); font-size: 13px; line-height: 1.5; }
+.sky-void > .icon { margin-top: 2px; color: var(--muted); flex-shrink: 0; }
+.sky-table tbody tr { cursor: pointer; }
+.sky-table tbody tr:hover td { background: var(--hover); }
+.sky-table .sky-row-hl td { background: var(--accent-soft); }
+.sky-glyph { width: 28px; font-size: 17px; color: var(--accent); text-align: center; }
+.sky-retro { margin-left: 5px; color: var(--danger); font-weight: 650; font-size: 12px; }
+
+.moon-svg { display: block; flex-shrink: 0; }
+.moon-dark { fill: var(--surface-3); stroke: var(--border); stroke-width: 1; }
+.moon-lit { fill: #e8c766; }
+[data-theme="dark"] .moon-dark { fill: #2a2a33; stroke: #3a3a45; }
+[data-theme="dark"] .moon-lit { fill: #f1d98a; }
+
+.sky-events { display: flex; flex-direction: column; }
+.sky-event + .sky-event { border-top: 1px solid var(--hairline); }
+.sky-event-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 9px 4px; background: none; border: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; border-radius: 8px; }
+.card-body.flush .sky-event-row { padding: 9px 16px; border-radius: 0; }
+.sky-event-row:hover { background: var(--hover); }
+.sky-event-ico { width: 30px; height: 30px; flex-shrink: 0; border-radius: 9px; display: grid; place-items: center; font-size: 16px; background: var(--surface-2); font-family: "Segoe UI Symbol", "Noto Sans Symbols", "Apple Symbols", "DejaVu Sans", sans-serif; }
+.sky-event-ico.k-station { color: var(--danger); font-weight: 700; font-size: 14px; }
+.sky-event-ico.k-ingress { color: var(--accent); font-weight: 700; }
+.sky-event-ico.k-eclipse { background: var(--warning-soft); }
+.sky-event-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.sky-event-title { font-weight: 550; }
+.sky-event-caret { transition: transform .15s; flex-shrink: 0; }
+.sky-event.open .sky-event-caret { transform: rotate(180deg); }
+.sky-event-text { margin: 0 4px 10px 46px; font-size: 13.5px; line-height: 1.55; color: var(--text-2); }
+.card-body.flush .sky-event-text { margin: 0 16px 12px 58px; }
+
+.sky-nav { display: flex; align-items: center; gap: 6px; }
+.sky-nav-title { font-size: 17px; min-width: 150px; text-align: center; font-variant-numeric: tabular-nums; }
+.sky-nav .btn.sm { margin-left: auto; }
+
+/* the Moon calendar */
+.moon-cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.moon-head { font-size: 11.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; text-align: center; padding: 2px 0 4px; }
+.moon-cell { position: relative; min-height: 92px; display: grid; grid-template-rows: auto 1fr auto auto; justify-items: center; align-items: center; gap: 2px; padding: 6px 4px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; color: inherit; cursor: pointer; text-align: center; min-width: 0; }
+.moon-cell:hover:not(:disabled) { background: var(--surface-2); }
+.moon-cell:disabled { cursor: default; }
+.moon-cell.blank { border-color: transparent; background: none; cursor: default; }
+.moon-cell.today { border-color: var(--accent); }
+.moon-cell.today .moon-num { background: var(--accent); color: #fff; }
+.moon-cell.big { background: color-mix(in srgb, #e8c766 9%, var(--surface)); }
+.moon-cell.sel, .moon-cell.big.sel { background: var(--accent-soft); border-color: var(--accent); }
+.moon-num { justify-self: start; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; min-width: 20px; height: 20px; line-height: 20px; border-radius: 10px; padding: 0 4px; }
+.moon-icon { display: grid; place-items: center; }
+.moon-sign { font-size: 13px; color: var(--text-2); display: flex; align-items: baseline; gap: 3px; line-height: 1.2; }
+.moon-ing { font-size: 10px; color: var(--muted); font-family: inherit; font-variant-numeric: tabular-nums; }
+.moon-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; min-height: 16px; }
+.moon-badge { display: inline-grid; place-items: center; min-width: 16px; height: 16px; padding: 0 3px; border-radius: 5px; font-size: 10.5px; font-weight: 700; line-height: 1; background: var(--surface-2); }
+.moon-badge.b-phase { background: none; font-size: 12px; }
+.moon-badge.b-ecl { background: var(--warning-soft); color: var(--warning); }
+.moon-badge.b-st { background: var(--danger-soft); color: var(--danger); }
+.moon-vc { display: inline-grid; place-items: center; height: 16px; padding: 0 3px; border-radius: 5px; font-size: 9.5px; font-weight: 650; color: var(--muted); border: 1px dashed var(--border); }
+.moon-mood { position: absolute; top: 8px; right: 7px; width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.moon-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; }
+.moon-legend > span { display: inline-flex; align-items: center; gap: 5px; }
+.moon-legend .moon-mood { position: static; }
+
+/* retrogrades */
+.retro-grid { display: flex; flex-direction: column; gap: 6px; }
+.retro-months, .retro-lane { display: grid; grid-template-columns: 110px minmax(0, 1fr); align-items: center; gap: 10px; }
+.retro-months { grid-template-columns: 110px repeat(12, minmax(0, 1fr)); gap: 0; font-size: 11px; color: var(--muted); }
+.retro-name { display: flex; align-items: center; gap: 6px; font-size: 13px; white-space: nowrap; }
+.retro-name .glyph, .retro-item-title .glyph { color: var(--accent); width: 16px; text-align: center; }
+.retro-track { position: relative; height: 18px; border-radius: 6px; background: repeating-linear-gradient(to right, var(--surface-2) 0, var(--surface-2) calc(100% / 12 - 1px), var(--border) calc(100% / 12 - 1px), var(--border) calc(100% / 12)); }
+.retro-bar { position: absolute; top: 3px; bottom: 3px; border-radius: 4px; background: var(--danger); opacity: .85; }
+.retro-bar.r-mercury { background: #e8590c; }
+.retro-bar.r-venus { background: #d6336c; }
+.retro-bar.r-mars { background: #c92a2a; }
+.retro-bar.r-jupiter { background: #1c7ed6; }
+.retro-bar.r-saturn { background: #5f3dc4; }
+.retro-bar.r-uranus { background: #0ca678; }
+.retro-bar.r-neptune { background: #1098ad; }
+.retro-bar.r-pluto { background: #495057; }
+.retro-today { position: absolute; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; background: var(--text); border-radius: 1px; }
+.retro-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.retro-item-title { display: inline-flex; align-items: center; gap: 6px; }
+.retro-dates { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 13.5px; }
+.retro-now { margin-left: 6px; }
+
+.sky-month-h { font-size: 13px; font-weight: 650; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin: 0 0 8px; }
+
+/* ---- Readings ---- */
+.readings-toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.readings-kinds { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.readings-kept { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; cursor: pointer; }
+.reading-list { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.reading-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; background: none; border: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.reading-row + .reading-row { border-top: 1px solid var(--hairline); }
+.reading-row:hover { background: var(--hover); }
+.reading-ico { width: 32px; height: 32px; flex-shrink: 0; border-radius: 9px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); align-self: flex-start; }
+.reading-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.reading-title { display: flex; align-items: center; gap: 6px; font-weight: 600; min-width: 0; }
+.reading-kept { color: var(--accent); flex-shrink: 0; }
+.reading-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.reading-preview { display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.45; }
+.chip-static { display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 8px; border-radius: 999px; font-size: 11.5px; font-weight: 600; background: var(--surface-2); color: var(--text-2); }
+
+.reading-page { max-width: 760px; }
+.reading-head { margin-bottom: 14px; }
+.reading-head h1 { font-size: 22px; letter-spacing: -.02em; margin: 8px 0 4px; }
+.reading-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.btn.active-soft { background: var(--accent-soft); color: var(--accent-ink); border-color: transparent; }
+.reading-notes-err { margin-bottom: 14px; }
+.reading-body { padding: 18px 20px; }
+.reading-foot { margin-top: 12px; }
+
+@media (max-width: 1099px) {
+  .sky-now { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .sky-tabs { margin-bottom: 14px; }
+  .sky-nav-title { min-width: 0; flex: 1; font-size: 16px; }
+  .moon-cal { gap: 2px; }
+  .moon-head { font-size: 10px; letter-spacing: 0; }
+  .moon-cell { min-height: 66px; padding: 3px 1px; border-radius: 7px; gap: 1px; }
+  .moon-num { font-size: 10.5px; height: 17px; line-height: 17px; min-width: 17px; padding: 0 3px; }
+  .moon-sign { font-size: 11px; }
+  .moon-cal .moon-ing, .moon-cal .moon-vc { display: none; }
+  .moon-badge { min-width: 13px; height: 13px; font-size: 9px; padding: 0 2px; }
+  .moon-badge.b-phase { font-size: 10px; }
+  .moon-mood { top: 5px; right: 4px; width: 6px; height: 6px; }
+  .retro-months, .retro-lane { grid-template-columns: 74px minmax(0, 1fr); gap: 6px; }
+  .retro-months { grid-template-columns: 74px repeat(12, minmax(0, 1fr)); gap: 0; }
+  .retro-name { font-size: 12px; }
+  .sky-event-text, .card-body.flush .sky-event-text { margin-left: 16px; }
+  .reading-body { padding: 14px; }
+  .readings-kept { margin-left: 0; }
+}
