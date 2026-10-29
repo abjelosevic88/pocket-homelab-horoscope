@@ -299,7 +299,9 @@ func (s *Server) readingFor(ctx context.Context, uid int64, p store.Person, st s
 			best, topArea = d, a
 		}
 	}
-	rd.Headline = content.Headline(rd.Tone, topArea, seedOf(rd.Date, strconv.FormatInt(p.ID, 10)))
+	// the day number walks through the headline pool, so neighbouring days
+	// with the same mood still read differently
+	rd.Headline = content.Headline(rd.Tone, topArea, day.Unix()/86400+seedOf(strconv.FormatInt(p.ID, 10))%7)
 	parts := []string{}
 	if len(rd.Transits) > 0 {
 		parts = append(parts, firstSentence(rd.Transits[0].Text))
