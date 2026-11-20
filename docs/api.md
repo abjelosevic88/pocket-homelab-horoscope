@@ -54,6 +54,8 @@ Everything is per person: another person's ids answer 404. Times of sky events a
 `POST /notify/today`, `GET|POST /users`, `PUT|DELETE /users/{id}` (admins), `GET /backup` (admins), `GET /export.json`,
 `GET /export.csv` (people), `POST /import` (a Pocket Horoscope export).
 
+Pocket Move can copy your people, journal and readings out and bring them in: `GET /pocket/portable` describes `GET /export.json`, `GET /export.csv` and `POST /import` under the link scopes `move:export` and `move:import`.
+
 `GET /healthz`, `GET /readyz`, `GET /metrics`.
 
 ## Pocket Core links
