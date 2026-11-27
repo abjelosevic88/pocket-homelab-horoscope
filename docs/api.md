@@ -63,4 +63,9 @@ Pocket Move can copy your people, journal and readings out and bring them in: `G
 Offers `horoscope:read` (`/dashboard /overlay /today /transits /sky/now /sky/events /sky/moon /journal /day/{date}`) and
 `horoscope:write` (`POST /journal`, `PUT/DELETE /journal/{id}` — only check-ins that app wrote). Publishes
 `horoscope.daily_ready`, `horoscope.journal_logged`, `horoscope.person_added`.
+For Pocket Search, Pocket Day and Pocket Hub (category `Everyday`) it answers the capability routes, each under its own scope and only with what is already stored (no reading is written, no AI is asked):
+`GET /pocket/search?q=&limit=` (`pocket:search`: the readings you kept, by title, text and the people they are about, and your check-ins by note and tags; bangs `!horoscope`, `!stars`),
+`GET /pocket/day/{date}` (`pocket:day`: the readings written for that day, the first sentence of yours as the day's line with your check-in's note on it, mood and energy as numbers),
+`GET /pocket/widget` (`pocket:widget`: the first sentence of today's reading and your sign; empty until today's reading is written).
+No quick capture: a check-in is a mood and energy, not a line of text.
 Uses Pocket Contacts (`contacts:read`), Pocket Notes (`notes:write`), Pocket Health (`health:read`) and Pocket AI.
